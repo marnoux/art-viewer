@@ -1,0 +1,6 @@
+.card-deck > .card {
+	width: 29%;
+	flex-wrap: wrap;
+	flex: initial;
+	background-color: #191919;
+}
