@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import MainHeader from './components/UI/MainHeader/MainHeader';
@@ -14,16 +14,13 @@ const App = () => {
 	const artistChangeHandler = (artist) => {
 		setArtist(artist);
 		setBaseURL(baseUrlString + artist.replace(' ', '+').trim());
-	};
 
-	useEffect(() => {
 		if (artist.length > 0) {
-			console.log('artist length > 0 ' + artist)
 			axios.get(baseURL).then((response) => {
 				setArtObjects(response.data);
 			});
 		}
-	}, []);
+	};
 
 	return (
 		<div className='container'>

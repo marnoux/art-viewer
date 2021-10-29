@@ -321,17 +321,16 @@ import CardList from '../Card/CardList';
 // ];
 
 const Paintings = (props) => {
-	const post = props.artObjects;
-
-	console.log(post);
-
-	// if (!post) {
+	// if (props.artObjects.length > 0) {
 	// 	return (
 	// 		<div className='container mt-5'>
 	// 			<h1 className='text-center'>No paintings found for artist</h1>
 	// 		</div>
 	// 	);
 	// }
+
+	const post = props.artObjects;
+	console.log(post.length);
 
 	return (
 		<div className='container mt-2'>

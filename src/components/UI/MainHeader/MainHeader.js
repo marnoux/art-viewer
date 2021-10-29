@@ -5,10 +5,9 @@ const MainHeader = (props) => {
 	// Use ref to get input value
 	let textInput = createRef();
 
-	const artistChangeHandler = (e) => {
+	const artistInputChangeHandler = (e) => {
 		e.preventDefault();
 		props.onChangeArtist(textInput.current.value);
-		console.log(textInput.current.value);
 	};
 
 	return (
@@ -24,7 +23,7 @@ const MainHeader = (props) => {
 				<button
 					className='btn btn-outline-success'
 					type='submit'
-					onClick={artistChangeHandler}
+					onClick={artistInputChangeHandler}
 				>
 					Search
 				</button>
