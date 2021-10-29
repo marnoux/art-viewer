@@ -1,0 +1,4 @@
+/* Use of important to override bootstrap styling */
+.card {
+	background-color: #212121 !important;
+}

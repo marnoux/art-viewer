@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { createRef } from 'react';
 import './MainHeader.css';
 
 const MainHeader = (props) => {
-	let textInput = React.createRef(); // React use ref to get input value
+	// Use ref to get input value
+	let textInput = createRef();
 
 	const artistChangeHandler = (e) => {
+		e.preventDefault();
 		props.onChangeArtist(textInput.current.value);
+		console.log(textInput.current.value);
 	};
 
 	return (
