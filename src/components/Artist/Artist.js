@@ -1,4 +1,13 @@
-import React from 'react';
+/*
+	This component was added for a possible extension.
+	Instead of hard coding the artist in App.js, the 
+	user could select the artist from a list populated 
+	with all the artists in the museum.
+	
+	I have decided to leave in the component but omit 
+	it from the final product in order to stick to the
+	requirements.
+*/
 
 const Artist = () => {
 	var Data = [

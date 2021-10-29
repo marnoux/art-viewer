@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import CardList from '../Card/CardList';
 import Axios from 'axios';
+import CardList from '../Card/CardList';
 import Spinner from '../UI/Spinner/Spinner';
 
 const Paintings = (props) => {
 	const [artObject, setArtObject] = useState(null);
 
+	// Concatenate the set url value with the selected artist state
 	const url =
 		'https://www.rijksmuseum.nl/api/nl/collection?key=yW6uq3BV&involvedMaker=' +
+		// Replace and trim whitespace to ensure valid API call
 		props.artist.replace(' ', '+').trim();
 
+	/* 
+		Use the useEffect hook to make async call as well as 
+		setting the subscription as an observable, enabling 
+		more flexibility and error handling with the API 
+		call, leading to a better user experience.
+	*/
 	useEffect(() => {
 		Axios.get(url)
 			.then((response) => {
+				// Update the artObject state with the response of the API call
 				setArtObject(response.data.artObjects);
 			})
+			// If something went wrong with the API call, return this to the user
 			.catch((error) => {
 				return (
 					<div>
@@ -32,6 +42,11 @@ const Paintings = (props) => {
 		return <Spinner />;
 	}
 
+	/* 
+		Finally, pass the returned object to the CardList 
+		component as a prop to render the results on the 
+		screen in a clean way.
+	*/
 	return (
 		<div className='container mt-2'>
 			<CardList items={artObject} />

@@ -1,3 +1,4 @@
+// Basic spinner component to display while waiting for the API call to complete
 import Loader from 'react-loader-spinner';
 
 const Spinner = () => {

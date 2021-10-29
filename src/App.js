@@ -3,7 +3,12 @@ import MainHeader from './components/UI/MainHeader/MainHeader';
 import Paintings from './components/Paintings/Paintings';
 
 const App = () => {
-	const [selectedArtist, setSelectedArtist] = useState('Rembrandt van Rijn');
+	/**
+	 * To get paintings from other artists, change the default state value
+	 * below to any valid artist (See components --> Artist for a list of
+	 * valid artists.)
+	 */
+	const [selectedArtist, setSelectedArtist] = useState('Vincent van Gogh');
 
 	const selectedArtistChangeHandler = (artist) => {
 		setSelectedArtist(artist);

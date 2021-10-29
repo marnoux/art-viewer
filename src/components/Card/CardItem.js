@@ -1,9 +1,14 @@
 import React from 'react';
-import './CardItem.css';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+
+import './CardItem.css';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const CardItem = (props) => {
+	/**
+	 * Lazy loading implemented with react-lazy-load-image-component
+	 * and by replacing '<img>' with '<LazyLoadImage>'
+	 */
 	return (
 		<div className='card col-4 py-4 mt-4 text-center'>
 			<div className='card-group d-flex flex-wrap'>

@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import Artist from '../../Artist/Artist';
 
 const MainHeader = (props) => {
 	const [artist, setArtist] = useState(props.artist);
 
+	/*
+		The reason for using sate here instead of a variable
+		is to leave the function open to a possible extension
+		mentioned in the readme. Instead of hard coding the artist,
+		the user could select valid artists from a dropdown.
+	 */
 	const artistChangeHandler = (selectedArtist) => {
 		setArtist(selectedArtist);
 	};
@@ -13,8 +18,7 @@ const MainHeader = (props) => {
 			<h1>
 				<u>Rijksmuseum</u>
 			</h1>
-			<Artist selected={artist} onChangeFilter={artistChangeHandler} />
-			{/* <h2 className='navbar-brand'>Works by {artist}</h2> */}
+			<h2 className='navbar-brand'>Works by {artist}</h2>
 		</nav>
 	);
 };
