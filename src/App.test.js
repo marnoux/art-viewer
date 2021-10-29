@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders Online Art Gallery react link', () => {
+test('renders Rijksmuseum', () => {
 	render(<App />);
-	const linkElement = screen.getByText(/Online Art Gallery/i);
+	const linkElement = screen.getByText(/Rijksmuseum/i);
 	expect(linkElement).toBeInTheDocument();
 });
