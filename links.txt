@@ -4,3 +4,4 @@ https://medium.com/front-end-weekly/image-compression-in-reactjs-a07ec0066b24#id
 
 https://www.rijksmuseum.nl/api/nl/collection?key=yW6uq3BV&involvedMaker=Rembrandt+van+Rijn
 
+file:///C:/Users/marno/Downloads/Qardio%20Challenge%20for%20Web%20Developers%20-%20Rijks.pdf
