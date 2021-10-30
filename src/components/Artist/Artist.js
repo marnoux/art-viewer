@@ -113,10 +113,14 @@ const Artist = () => {
 			'Joseph Maes',
 		].sort(),
 		MakeItem = (artists) => {
-			return <option>{artists}</option>;
+			return <option key={Math.random()}>{artists}</option>;
 		};
 
-	return <select>{Data.map(MakeItem)}</select>;
+	return (
+		<select className='form-select' style={{ width: '15rem' }}>
+			{Data.map(MakeItem)}
+		</select>
+	);
 };
 
 export default Artist;
