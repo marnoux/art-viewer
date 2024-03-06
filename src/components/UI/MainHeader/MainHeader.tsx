@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 // import Artist from '../../Artist/Artist';
 
-const MainHeader = (props) => {
+const MainHeader = (props: { artist: any }) => {
 	const [artist, setArtist] = useState(props.artist);
 
 	/*
@@ -11,12 +11,12 @@ const MainHeader = (props) => {
 		mentioned in the readme. Instead of hard coding the artist,
 		the user could select valid artists from a dropdown.
 	 */
-	const artistChangeHandler = (selectedArtist) => {
+	const artistChangeHandler = (selectedArtist: any) => {
 		setArtist(selectedArtist);
 	};
 
 	return (
-		<nav className='navbar navbar-dark mt-3'>
+		<nav className="navbar navbar-dark mt-3">
 			<h1>
 				<u>Rijksmuseum</u>
 			</h1>
@@ -24,7 +24,7 @@ const MainHeader = (props) => {
 					to display drop down of all artists on screen
 					<Artist /> 
 			*/}
-			<h2 className='navbar-brand'>Works by {artist}</h2>
+			<h2 className="navbar-brand">Works by {artist}</h2>
 		</nav>
 	);
 };

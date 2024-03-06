@@ -1,11 +1,11 @@
 import React from 'react';
 import CardItem from './CardItem';
 
-const CardList = (props) => {
+const CardList = (props: { items: any[] }) => {
 	return (
-		<div className='container'>
-			<div className='row'>
-				{props.items.map((painting) => (
+		<div className="container">
+			<div className="row">
+				{props.items.map(painting => (
 					<CardItem
 						key={painting.id}
 						title={painting.title}

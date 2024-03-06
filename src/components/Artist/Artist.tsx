@@ -9,6 +9,8 @@
 	requirements.
 */
 
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react';
+
 const Artist = () => {
 	var Data = [
 			'George Hendrik Breitner',
@@ -112,15 +114,21 @@ const Artist = () => {
 			'Johannes Josephus Aarts',
 			'Joseph Maes',
 		].sort(),
-		MakeItem = (artists) => {
+		MakeItem = (
+			artists:
+				| string
+				| number
+				| boolean
+				| ReactElement<any, string | JSXElementConstructor<any>>
+				| Iterable<ReactNode>
+				| ReactPortal
+				| null
+				| undefined
+		) => {
 			return <option key={Math.random()}>{artists}</option>;
 		};
 
-	return (
-		<select className='form-select' style={{ width: '15rem' }}>
-			{Data.map(MakeItem)}
-		</select>
-	);
+	return <select style={{ width: '15rem' }}>{Data.map(MakeItem)}</select>;
 };
 
 export default Artist;

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import CardList from '../Card/CardList';
-import Spinner from '../UI/Spinner/Spinner';
 
-const Paintings = (props) => {
+const Paintings = (props: { artist: string }) => {
 	const [artObject, setArtObject] = useState(null);
 
 	// Concatenate the set url value with the selected artist state
@@ -20,15 +19,15 @@ const Paintings = (props) => {
 	*/
 	useEffect(() => {
 		Axios.get(url)
-			.then((response) => {
+			.then(response => {
 				// Update the artObject state with the response of the API call
 				setArtObject(response.data.artObjects);
 			})
 			// If something went wrong with the API call, return this to the user
-			.catch((error) => {
+			.catch(error => {
 				return (
 					<div>
-						<h1 className='text-center text-danger mt-5'>
+						<h1 className="text-center text-danger mt-5">
 							Sorry, we were unable to reach the Museum, please try again later.
 						</h1>
 						<h2>Reason: {error.response}</h2>
@@ -39,7 +38,7 @@ const Paintings = (props) => {
 
 	// Display spinner while API call completes
 	if (!artObject) {
-		return <Spinner />;
+		return <h1>Loading...</h1>;
 	}
 
 	/* 
@@ -48,7 +47,7 @@ const Paintings = (props) => {
 		screen in a clean way.
 	*/
 	return (
-		<div className='container mt-2'>
+		<div className="container mt-2">
 			<CardList items={artObject} />
 		</div>
 	);
