@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import MainHeader from './components/UI/MainHeader/MainHeader';
-import Paintings from './components/Paintings/Paintings';
 
 const App = () => {
 	/**
@@ -10,17 +8,19 @@ const App = () => {
 	 */
 	const [selectedArtist, setSelectedArtist] = useState('Vincent van Gogh');
 
-	const selectedArtistChangeHandler = (artist) => {
+	const selectedArtistChangeHandler = (artist: React.SetStateAction<string>) => {
 		setSelectedArtist(artist);
 	};
 
 	return (
-		<div className='container'>
-			<MainHeader
+		<div>
+			{/* <MainHeader
 				artist={selectedArtist}
 				onChangeArtist={selectedArtistChangeHandler}
 			/>
-			<Paintings artist={selectedArtist} />
+			<Paintings artist={selectedArtist} /> */}
+			<h1>{selectedArtist}</h1>
+			<h1>hello world</h1>
 		</div>
 	);
 };
