@@ -37,9 +37,7 @@ const Paintings = (props: { artist: string }) => {
 	}, [url]);
 
 	// Display spinner while API call completes
-	if (!artObject) {
-		return <h1>Loading...</h1>;
-	}
+	if (!artObject) return <h1>Loading...</h1>;
 
 	/* 
 		Finally, pass the returned object to the CardList 
