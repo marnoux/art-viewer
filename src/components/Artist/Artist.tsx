@@ -1,134 +1,62 @@
-/*
-	This component was added for a possible extension.
-	Instead of hard coding the artist in App.js, the 
-	user could select the artist from a list populated 
-	with all the artists in the museum.
-	
-	I have decided to leave in the component but omit 
-	it from the final product in order to stick to the
-	requirements.
-*/
+import { useEffect, useState } from 'react';
+import { Input } from '../UI/input';
+import { debounce, isEmpty, uniq } from 'lodash';
+import useArtObjects from '@/data/hooks/useArtObjects';
+import { Card, CardContent } from '@/components/UI/card';
+import { Button } from '../UI/button';
+import { ArtObject } from '@/data/types/types';
 
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal } from 'react';
+type ArtistProps = {
+	selectedArtist: string | null;
+	setSelectedArtist: (artist: string) => void;
+};
 
-const Artist = () => {
-	var Data = [
-			'George Hendrik Breitner',
-			'Jan Luyken',
-			'Reinier Vinkeles (I)',
-			'Marius Bauer',
-			'Isaac Israels',
-			'Johannes Tavenraat',
-			'Daniel Nikolaus Chodowiecki',
-			'Aat Veldhoen',
-			'Bernard Picart',
-			'Vincent Samuel Mentzel',
-			'Willem Witsen',
-			'anoniem (Monumentenzorg)',
-			'Antonio Tempesta',
-			'Carel Adolph Lion Cachet',
-			'Jacob Houbraken',
-			'Rembrandt van Rijn',
-			'Simon Fokke',
-			'Philips Galle',
-			'Romeyn de Hooghe',
-			'Richard Nicolaüs Roland Holst',
-			'Sébastien Leclerc (I)',
-			'Johan Michaël Schmidt Crans',
-			'Willem Diepraam',
-			'Jozef Israëls',
-			'Jan Veth',
-			'Wenceslaus Hollar',
-			'Crispijn van de Passe (I)',
-			'Frans Hogenberg',
-			'Jacob de Gheyn (II)',
-			'Meissener Porzellan Manufaktur',
-			'Johann Sadeler (I)',
-			'Stefano della Bella',
-			'Jeanne Bieruma Oosting',
-			'Adriaen Collaert',
-			'Caspar Luyken',
-			'Michel Wolgemut',
-			'Hendrick Goltzius',
-			'Hendrik Spilman',
-			'Anton Mauve',
-			'Leo Gestel',
-			'Reinier Willem Petrus de Vries (1874-1952)',
-			'Virgilius Solis',
-			'Jacques Callot',
-			'Jan van de Velde (II)',
-			'Pieter Schenk (I)',
-			'Cornelis Vreedenburgh',
-			'Gerrit Willem Dijsselhof',
-			"Carel Nicolaas Storm van 's-Gravesande",
-			'Christoffel van Sichem (II)',
-			'diverse vervaardigers',
-			'veuve Delpech (Naudet)',
-			'Anselmus Boëtius de Boodt',
-			'Israël Silvestre',
-			'Theo van Hoytema',
-			'Johannes of Lucas van Doetechum',
-			'August Allebé',
-			'Willem Cornelis Rip',
-			'Jean Lepautre',
-			'Reijer Stolk',
-			'Jan Caspar Philips',
-			'Abraham Rademaker',
-			'Hendrik Doijer',
-			'Eva Charlotte Pennink-Boelen',
-			'Simon Frisius',
-			'Manufactuur Oud-Loosdrecht',
-			'Claude Mellan',
-			'Crispijn van de Passe (II)',
-			'Charles Donker',
-			'Hieronymus Wierix',
-			'Giorgio Sommer',
-			'Pam Georg Rueter',
-			'Carel Christiaan Antony Last',
-			'Albert Greiner',
-			'Jacob Ernst Marcus',
-			'Martin Bernigeroth',
-			'Giovanni Battista Piranesi',
-			'Jan Punt',
-			'Boëtius Adamsz. Bolswert',
-			'Delizy',
-			'Johannes Wierix',
-			'Anthonie van den Bos',
-			'Antoon Derkinderen',
-			'Jacob Matham',
-			'Claes Jansz. Visscher (II)',
-			'Isaac Weissenbruch',
-			'Aegidius Sadeler',
-			'Peter Vos',
-			'Jan Brandes',
-			'Johan Braakensiek',
-			'Georg Rueter',
-			'Woodbury & Page',
-			'Hans Weiditz (II)',
-			'Carel Willink',
-			'Johannes Immerzeel',
-			'Jacques Villon',
-			'jonkheer Hendrik Teding van Berkhout (1879-1969)',
-			'Maria Vos',
-			'Lodewijk Schelfhout',
-			'Johannes Josephus Aarts',
-			'Joseph Maes',
-		].sort(),
-		MakeItem = (
-			artists:
-				| string
-				| number
-				| boolean
-				| ReactElement<any, string | JSXElementConstructor<any>>
-				| Iterable<ReactNode>
-				| ReactPortal
-				| null
-				| undefined
-		) => {
-			return <option key={Math.random()}>{artists}</option>;
-		};
+const Artist = ({ selectedArtist, setSelectedArtist }: ArtistProps) => {
+	const [searchString, setSearchString] = useState<string>('');
+	const [artistList, setArtistList] = useState<string[]>([]);
+	const { data, isLoading } = useArtObjects();
 
-	return <select style={{ width: '15rem' }}>{Data.map(MakeItem)}</select>;
+	const handleChange = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+		setSearchString(e.target.value);
+	}, 300);
+
+	useEffect(() => {
+		if (isEmpty(data?.artObjects) || isLoading) return;
+
+		const artistList = data?.artObjects.map((artObject: ArtObject) => artObject.principalOrFirstMaker);
+
+		const uniqueArtistList = uniq(artistList);
+
+		const filteredArtistList: string[] = uniqueArtistList
+			.filter((v): v is string => typeof v === 'string')
+			.filter(artist => artist.toLowerCase().includes(searchString.toLowerCase()));
+
+		setArtistList(filteredArtistList);
+	}, [data, searchString]);
+
+	return (
+		<div className="flex flex-col justify-center items-center gap-4 w-96">
+			{selectedArtist && <h2>Works by {selectedArtist}</h2>}
+			<Input className="mb-8" type="text" placeholder={'Search for an artist'} onChange={handleChange} />
+			{!isEmpty(artistList) && searchString && (
+				<Card>
+					<CardContent className="flex flex-col gap-3 justify-between p-2 m-2">
+						{artistList.map((artist: string) => (
+							<Button
+								key={artist}
+								onClick={() => {
+									setSearchString('');
+									setSelectedArtist(artist);
+								}}
+							>
+								{artist}
+							</Button>
+						))}
+					</CardContent>
+				</Card>
+			)}
+		</div>
+	);
 };
 
 export default Artist;

@@ -1,53 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import Axios from 'axios';
-import CardList from '../Card/CardList';
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/UI/carousel';
+import useArtObjects from '@/data/hooks/useArtObjects';
+import { ArtObject } from '@/data/types/types';
+import { isEmpty } from 'lodash';
+import { useEffect, useState } from 'react';
 
-const Paintings = (props: { artist: string }) => {
-	const [artObject, setArtObject] = useState(null);
+type PaintingsProps = {
+	selectedArtist: string | null;
+};
 
-	// Concatenate the set url value with the selected artist state
-	const url =
-		'https://www.rijksmuseum.nl/api/nl/collection?key=yW6uq3BV&involvedMaker=' +
-		// Replace and trim whitespace to ensure valid API call
-		props.artist.replace(' ', '+').trim();
+const Paintings = ({ selectedArtist }: PaintingsProps) => {
+	const [filteredData, setFilteredData] = useState([]);
+	const { data, isLoading } = useArtObjects();
 
-	/* 
-		Use the useEffect hook to make async call as well as 
-		setting the subscription as an observable, enabling 
-		more flexibility and error handling with the API 
-		call, leading to a better user experience.
-	*/
 	useEffect(() => {
-		Axios.get(url)
-			.then(response => {
-				// Update the artObject state with the response of the API call
-				setArtObject(response.data.artObjects);
-			})
-			// If something went wrong with the API call, return this to the user
-			.catch(error => {
-				return (
-					<div>
-						<h1 className="text-center text-danger mt-5">
-							Sorry, we were unable to reach the Museum, please try again later.
-						</h1>
-						<h2>Reason: {error.response}</h2>
-					</div>
-				);
-			});
-	}, [url]);
+		if (isEmpty(data?.artObjects) || isLoading || !selectedArtist) return;
 
-	// Display spinner while API call completes
-	if (!artObject) return <h1>Loading...</h1>;
+		const filteredData = data?.artObjects.filter((artObject: ArtObject) => {
+			console.log(selectedArtist);
 
-	/* 
-		Finally, pass the returned object to the CardList 
-		component as a prop to render the results on the 
-		screen in a clean way.
-	*/
-	return (
-		<div className="container mt-2">
-			<CardList items={artObject} />
-		</div>
+			return artObject.principalOrFirstMaker === selectedArtist;
+		});
+
+		setFilteredData(filteredData);
+	}, [data, isLoading, selectedArtist]);
+
+	useEffect(() => {
+		setFilteredData(data?.artObjects);
+	}, [isLoading]);
+
+	const onlyOneItem = filteredData?.length === 1;
+
+	const flexBasis = onlyOneItem ? '' : 'sm:basis-1/2 basis-full md:basis-1/3';
+
+	return isEmpty(filteredData) ? (
+		<></>
+	) : (
+		<Carousel>
+			{!onlyOneItem && <CarouselPrevious />}
+			{!onlyOneItem && <CarouselNext />}
+			<CarouselContent className="w-[calc(100vw-10rem)]">
+				{filteredData.map((artObject: ArtObject) => (
+					<CarouselItem key={artObject.id} className={`${flexBasis} p-5`}>
+						<p>{artObject?.title}</p>
+						<img src={artObject?.webImage?.url} alt={artObject?.title} />
+					</CarouselItem>
+				))}
+			</CarouselContent>
+		</Carousel>
 	);
 };
 

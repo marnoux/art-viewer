@@ -1,11 +1,16 @@
 import useArtObjects from '../../data/hooks/useArtObjects';
+import Artist from '../Artist/Artist';
+import { ArtObject } from '@/data/types/types';
+import { useState } from 'react';
+import Paintings from '../Paintings/Paintings';
 
 const Home = () => {
-	const { data, isLoading } = useArtObjects();
+	const [selectedArtist, setSelectedArtist] = useState<string>('');
 
 	return (
-		<div>
-			<p className="">Home</p>
+		<div className="flex flex-col items-center justify-center w-full p-10 ">
+			<Artist selectedArtist={selectedArtist} setSelectedArtist={setSelectedArtist} />
+			<Paintings selectedArtist={selectedArtist} />
 		</div>
 	);
 };
