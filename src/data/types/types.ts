@@ -5,4 +5,7 @@ export type ArtObject = {
 	webImage: {
 		url: string | undefined;
 	};
+	headerImage: {
+		url: string | undefined;
+	};
 };

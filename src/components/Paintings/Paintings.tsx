@@ -3,6 +3,7 @@ import useArtObjects from '@/data/hooks/useArtObjects';
 import { ArtObject } from '@/data/types/types';
 import { isEmpty } from 'lodash';
 import { useEffect, useState } from 'react';
+import PaintingsSkeleton from './PaintingsSkeleton';
 
 type PaintingsProps = {
 	selectedArtist: string | null;
@@ -33,11 +34,16 @@ const Paintings = ({ selectedArtist }: PaintingsProps) => {
 	const flexBasis = onlyOneItem ? '' : 'sm:basis-1/2 basis-full md:basis-1/3';
 
 	return isEmpty(filteredData) ? (
-		<></>
+		<PaintingsSkeleton />
 	) : (
 		<Carousel>
-			{!onlyOneItem && <CarouselPrevious />}
-			{!onlyOneItem && <CarouselNext />}
+			{!onlyOneItem && (
+				<>
+					<CarouselPrevious />
+					<CarouselNext />
+				</>
+			)}
+
 			<CarouselContent className="w-[calc(100vw-10rem)]">
 				{filteredData.map((artObject: ArtObject) => (
 					<CarouselItem key={artObject.id} className={`${flexBasis} p-5`}>
