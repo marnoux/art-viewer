@@ -53,12 +53,12 @@ const Paintings = ({ selectedArtist }: PaintingsProps) => {
 					</>
 				)}
 
-				<CarouselContent className="w-[calc(100vw-6rem)]" key={selectedArtist}>
+				<CarouselContent className="w-[calc(100vw-6rem)]">
 					{filteredData.map((artObject: ArtObject) => {
 						return (
 							<>
 								<CarouselItem
-									key={artObject.id}
+									key={artObject.headerImage.guid}
 									className={`${flexBasis} p-5 cursor-pointer w-screen h-full`}
 									onClick={() => console.log(artObject)}
 								>
