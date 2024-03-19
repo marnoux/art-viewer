@@ -17,7 +17,7 @@ import { useState } from 'react';
 import useArtObjects from '@/data/hooks/useArtObjects';
 import { ArtObject } from '@/data/types/types';
 import { Input } from '../UI/input';
-import { ComboboxDemo } from '../UI/ComboboxDemo';
+import { ComboBox } from '../UI/Combobox';
 
 const frameworks = [
 	{
@@ -49,23 +49,7 @@ const Filters = () => {
 
 	const { data } = useArtObjects();
 
-	console.log(data?.artObjects.map((artObject: ArtObject) => artObject.principalOrFirstMaker));
-
-	return (
-		// <Dialog>
-		// 	<DialogTrigger>Open</DialogTrigger>
-		// 	<DialogContent>
-		// 		<DialogHeader>
-		// 			<DialogTitle>Filters</DialogTitle>
-		// 			<DialogDescription>Here you can filter the paintings by artist or title.</DialogDescription>
-
-		<ComboboxDemo />
-
-		// 			<Button>Apply</Button>
-		// 		</DialogHeader>
-		// 	</DialogContent>
-		// </Dialog>
-	);
+	return <ComboBox items={frameworks} title="Framework" />;
 };
 
 export default Filters;

@@ -24,11 +24,9 @@ const Paintings = ({ selectedArtist }: PaintingsProps) => {
 	useEffect(() => {
 		if (isEmpty(data?.artObjects) || isLoading || !selectedArtist) return;
 
-		const filteredData = data?.artObjects.filter((artObject: ArtObject) => {
-			console.log(selectedArtist);
-
-			return artObject.principalOrFirstMaker === selectedArtist;
-		});
+		const filteredData = data?.artObjects.filter(
+			(artObject: ArtObject) => artObject.principalOrFirstMaker === selectedArtist
+		);
 
 		setFilteredData(filteredData);
 	}, [data, isLoading, selectedArtist]);
